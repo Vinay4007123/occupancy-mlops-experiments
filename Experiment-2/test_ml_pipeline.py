@@ -13,34 +13,31 @@ from train_model import (
 )
 
 
-EXPERIMENT_DIR = Path(
-    __file__
-).resolve().parent
+EXPERIMENT_DIR = Path(__file__).resolve().parent
 
-MODEL_PATH = (
-    EXPERIMENT_DIR / "occupancy_model.pkl"
-)
+MODEL_PATH = EXPERIMENT_DIR / "occupancy_model.pkl"
 
-METRICS_PATH = (
-    EXPERIMENT_DIR / "metrics.json"
-)
+METRICS_PATH = EXPERIMENT_DIR / "metrics.json"
 
 
 class TestMLPipeline(unittest.TestCase):
 
     def test_dataset_exists(self):
         self.assertTrue(
-            DATASET_PATH.exists()
+            DATASET_PATH.exists(),
+            f"Dataset not found: {DATASET_PATH}"
         )
 
     def test_model_created(self):
         self.assertTrue(
-            os.path.exists(MODEL_PATH)
+            os.path.exists(MODEL_PATH),
+            f"Model not found: {MODEL_PATH}"
         )
 
     def test_metrics_created(self):
         self.assertTrue(
-            os.path.exists(METRICS_PATH)
+            os.path.exists(METRICS_PATH),
+            f"Metrics not found: {METRICS_PATH}"
         )
 
     def test_accuracy_is_valid(self):
@@ -79,7 +76,9 @@ class TestMLPipeline(unittest.TestCase):
             FEATURES
         ].iloc[[0]]
 
-        prediction = model.predict(sample)[0]
+        prediction = model.predict(
+            sample
+        )[0]
 
         self.assertIn(
             int(prediction),
@@ -93,7 +92,9 @@ class TestMLPipeline(unittest.TestCase):
         )
 
         classes = sorted(
-            data[TARGET].unique().tolist()
+            data[TARGET]
+            .unique()
+            .tolist()
         )
 
         self.assertEqual(

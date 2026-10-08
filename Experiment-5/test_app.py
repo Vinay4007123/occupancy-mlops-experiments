@@ -8,10 +8,7 @@ from app import app, FEATURES
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DATASET_PATH = (
-    BASE_DIR
-    / "Occupancy_Estimation.csv"
-)
+DATASET_PATH = BASE_DIR / "Occupancy_Estimation.csv"
 
 
 class TestPredictionApplication(unittest.TestCase):
@@ -23,7 +20,6 @@ class TestPredictionApplication(unittest.TestCase):
         self.data = pd.read_csv(
             DATASET_PATH
         )
-
 
     def test_root_endpoint(self):
 
@@ -39,7 +35,6 @@ class TestPredictionApplication(unittest.TestCase):
             "ok"
         )
 
-
     def test_health_endpoint(self):
 
         response = self.client.get("/health")
@@ -53,7 +48,6 @@ class TestPredictionApplication(unittest.TestCase):
             response.get_json()["status"],
             "healthy"
         )
-
 
     def test_prediction_endpoint(self):
 
@@ -87,7 +81,6 @@ class TestPredictionApplication(unittest.TestCase):
             int(result["prediction_code"]),
             [0, 1, 2, 3]
         )
-
 
     def test_missing_field_validation(self):
 

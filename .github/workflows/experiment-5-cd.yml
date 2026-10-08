@@ -46,7 +46,7 @@ jobs:
 
 
       # --------------------------------------------------
-      # 4. Install ML + Flask dependencies
+      # 4. Install dependencies
       # --------------------------------------------------
       - name: Install dependencies
         run: pip install -r Experiment-2/requirements.txt
@@ -68,9 +68,6 @@ jobs:
 
       # --------------------------------------------------
       # 7. Run Experiment 2 ML tests
-      # IMPORTANT:
-      # Run from Experiment-2 so that
-      # "from train_model import ..." works.
       # --------------------------------------------------
       - name: Run automated ML tests
         working-directory: Experiment-2
@@ -79,9 +76,6 @@ jobs:
 
       # --------------------------------------------------
       # 8. Run Experiment 5 Flask application tests
-      # IMPORTANT:
-      # Run from Experiment-5 so that
-      # "from app import app" works.
       # --------------------------------------------------
       - name: Run prediction application tests
         working-directory: Experiment-5
@@ -99,6 +93,9 @@ jobs:
           cp Experiment-2/occupancy_model.pkl release_candidate/
           cp Experiment-2/metrics.json release_candidate/
           cp Experiment-2/requirements.txt release_candidate/
+
+          cp Experiment-6/Dockerfile release_candidate/
+          cp Experiment-6/.dockerignore release_candidate/
 
           printf "Room Occupancy Prediction ML Application\nRun: python app.py\nEndpoint: POST /predict\n" > release_candidate/DEPLOYMENT.txt
 

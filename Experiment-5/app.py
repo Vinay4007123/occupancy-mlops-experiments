@@ -9,13 +9,13 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
-MODEL_PATH = (
-    BASE_DIR
-    / "Experiment-2"
-    / "occupancy_model.pkl"
-)
+
+MODEL_PATHS = [
+    BASE_DIR.parent / "Experiment-2" / "occupancy_model.pkl",
+    BASE_DIR / "occupancy_model.pkl"
+]
 
 
 FEATURES = [
@@ -40,13 +40,15 @@ FEATURES = [
 
 def load_model():
 
-    if not MODEL_PATH.exists():
-        raise FileNotFoundError(
-            "occupancy_model.pkl was not found. "
-            "Run Experiment-2 training first."
-        )
+    for model_path in MODEL_PATHS:
 
-    return joblib.load(MODEL_PATH)
+        if model_path.exists():
+
+            return joblib.load(model_path)
+
+    raise FileNotFoundError(
+        "occupancy_model.pkl was not found."
+    )
 
 
 @app.get("/")

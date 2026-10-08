@@ -15,7 +15,7 @@ from sklearn.preprocessing import StandardScaler
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATASET_PATH = (
-    BASE_DIR / "Occupancy_Estimation(7).csv"
+    BASE_DIR / "Occupancy_Estimation.csv"
 )
 
 TARGET = "Room_Occupancy_Count"

@@ -1,0 +1,51 @@
+name: Experiment 3 - Occupancy ML Quality Gate
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality-gate:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+
+      - name: Install ML dependencies
+        run: pip install -r Experiment-2/requirements.txt
+
+
+      - name: Train occupancy model
+        run: python Experiment-2/train_model.py
+
+
+      - name: Check ML quality gate
+        run: python Experiment-3/quality_gate.py
+
+
+      - name: Run automated ML tests
+        run: python Experiment-2/test_ml_pipeline.py

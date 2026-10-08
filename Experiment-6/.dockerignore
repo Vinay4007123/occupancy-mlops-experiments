@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+
+.git/
+.github/
+
+test_*.py
+
+*.csv
+
+release_candidate/
